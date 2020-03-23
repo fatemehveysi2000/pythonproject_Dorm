@@ -1,4 +1,5 @@
 from tkinter import *
+from _tkinter import *
 import tkinter.ttk as ttk
 import tkinter.messagebox as tkMessageBox
 import sqlite3
@@ -46,25 +47,54 @@ class Main_Page:
         self.root.geometry("600x600")
         self.root.title("Main Page")
 
-        BlockBTN = Button(self.root, text='Block', width="50", height="2", bd='3', activebackground='green', bg='white')
-        EmployeeBTN = Button(self.root, text='Employee', width="50", height="2", bd='3', activebackground='#0000ff', bg='white')
-        SrearchBTN = Button(self.root, text='Search', width='50', height='2', bd='3', activebackground='#ff8000', bg='white')
 
-        label = Label(self.root, text='Welcome Boss!', font=("Courier", 24 ))
-        label.place(x='10', y='10')
+
+
+        BlockBTN = Button(self.root, text='Block', width="10", height="1", bd='3', activebackground='green', bg='white')
+        EmployeeBTN = Button(self.root, text='Employee', width="10", height="1", bd='3', activebackground='#0000ff', bg='white',
+                             command=lambda: rabet(employee_menu, root))
+        SrearchBTN = Button(self.root, text='Search', width='10', height='1', bd='3', activebackground='#ff8000', bg='white')
+
+        label = Label(self.root, text='Welcome Boss!', font=("Courier", 12))
+        label.place(x='80', y='280')
 
         BlockBTN.pack(padx=5, pady=20)
-        EmployeeBTN.pack(padx=5,pady=100)
-        SrearchBTN.pack(padx=5,pady=100)
+        EmployeeBTN.pack(padx=5,pady=20)
+        SrearchBTN.pack(padx=5,pady=20)
+        self.root.geometry("%dx%d+%d+%d" % (300, 300, 500, 200))
+        self.root.resizable(0, 0)
 
-        SrearchBTN.mainloop()
-        BlockBTN.mainloop()
-        EmployeeBTN.mainloop()
-        self.root.mainloop()
+        # SrearchBTN.mainloop()
+        # BlockBTN.mainloop()
+        # EmployeeBTN.mainloop()
+        # self.root.mainloop()
 
-        self.root.bind()
 
-#----------------------------------
+
+#----------------------------------منوی کارمندان-----------------------------------
+class employee_menu :
+        def __init__(self, root):
+            self.root = root
+            self.root.configure(bg="black")
+            self.root.geometry("600x600")
+            self.root.title("Emoloyee_Menu")
+
+            AddBTN = Button(self.root, text='Add', width="10", height="1", bd='3', activebackground='green',
+                              bg='white' ,  command=lambda: rabet(add_staff, root))
+            RemoveBTN = Button(self.root, text='Remove', width="10", height="1", bd='3', activebackground='#0000ff',
+                                 bg='white', command=lambda: rabet(remove_staff,root))
+            ShowList_BTN = Button(self.root, text='Show List', width='10', height='1', bd='3', activebackground='#ff8000',
+                                bg='white')
+
+
+
+            AddBTN.pack(padx=5, pady=20)
+            RemoveBTN.pack(padx=5, pady=20)
+            ShowList_BTN.pack(padx=5, pady=20)
+            self.root.geometry("%dx%d+%d+%d" % (300, 300, 500, 200))
+            self.root.resizable(0, 0)
+
+
 #===============================================================
 class rabet :
 
@@ -92,12 +122,9 @@ class add_staff :
         self.root = root
         self.root.title("signup menu")
         self.root["bg"] = "black"
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        x = (screen_width / 2) - (100)
-        y = (screen_height / 2) - (200)
-        self.root.geometry("%dx%d+%d+%d" % (500, 400, x, y))
-        # self.root.resizable(0, 0)
+
+        self.root.geometry("%dx%d+%d+%d" % (500, 300, 500, 200))
+        self.root.resizable(0, 0)
 
         FIRSTNAME = StringVar()
         LASTNAME = StringVar()
@@ -136,13 +163,49 @@ class add_staff :
     def Save_staff(self,name, family, roll,personalnmber):
 
         array.append(Employee(name, family, roll,personalnmber))
-#-------------------------------------------------------------------------------
+#----------------------------------- حذف کامندان --------------------------------------------
+
+class remove_staff:
+    def __init__(self,root):
+
+        self.root = root
+        self.root.title("REMOVE:staf")
+        self.root["bg"] = "black"
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x = (screen_width / 2) - (100)
+        y = (screen_height / 2) - (200)
+        self.root.geometry("%dx%d+%d+%d" % (300, 500, x, y))
+        self.root.resizable(0, 0)
+
+        #         show list
+
+        inputNumber = IntVar()
+        lbl_input = Label(self.root, text="Enter number", font=('arial', 10), bd=5)
+        lbl_input.place(x=5,y=420)
+
+        input = Entry(self.root, textvariable=inputNumber,width=16, font=('arial', 14))
+        input.place(x=110,y=420)
+
+        staffReamoveBtn = Button(self.root, text="Remove", command=lambda: self.reamove_Staff(inputNumber), width=30)
+        staffReamoveBtn.pack(side=BOTTOM)
+
+    def reamove_Staff(self,num):
+
+         del array[num.get()-1]
+         print(array[num.get()-1].roll)
+
+
+
+
+
 
 
 
 #------------------------------ Main ------------------------------
 
 if __name__ == '__main__':
+
     root=Tk()
     first=Main_Page(root)
     root.mainloop()
