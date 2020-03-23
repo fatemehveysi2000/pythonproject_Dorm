@@ -27,6 +27,6 @@ class Main_Page:
         MailPage.bind()
 
 if __name__ == '__main__':
-    root=Tk()
+    root=tkinter.Tk()
     first=Main_Page(root)
     root.mainloop()
