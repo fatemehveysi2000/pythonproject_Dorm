@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 from _tkinter import *
 import tkinter.ttk as ttk
@@ -94,7 +95,7 @@ class employee_menu :
             RemoveBTN = Button(self.root, text='Remove', width="10", height="1", bd='3', activebackground='#0000ff',
                                  bg='white', command=lambda: rabet(remove_staff,root))
             ShowList_BTN = Button(self.root, text='Show List', width='10', height='1', bd='3', activebackground='#ff8000',
-                                bg='white')
+                                bg='white', command=lambda: rebet(show_list,root))
 
             AddBTN.pack(padx=5, pady=20)
             RemoveBTN.pack(padx=5, pady=20)
@@ -106,10 +107,7 @@ class employee_menu :
 
 #===============================================================
 class rabet :
-
-
     def __init__(self,_class,root):
-
         self.new=Toplevel(root)
         _class(self.new)
 # def Signup_menu_graphics():
@@ -170,6 +168,12 @@ class add_staff :
         btn_save = Button(ContactForm, text="Save", width=50,command=lambda: self.Save_staff(FIRSTNAME.get(),LASTNAME.get(),ROLL.get(),PERSONAL_NUMBER.get()))
         btn_save.grid(row=6, columnspan=2, pady=10)
         ContactForm.pack()
+
+    def show_list(swlf,root):
+        cols = ['Name', 'Family', 'Roll', 'Pr.no.']
+        rows = ['1', '2', '3', '4']
+        app = EntryGrid(cols, rows)
+
     def Save_staff(self,name, family, roll,personalnmber):
 
         array.append(Employee(name, family, roll,personalnmber))
@@ -190,6 +194,8 @@ class remove_staff:
 
         #         show list
 
+
+
         inputNumber = IntVar()
         lbl_input = Label(self.root, text="Enter number", font=('arial', 10), bd=5)
         lbl_input.place(x=5,y=420)
@@ -206,7 +212,121 @@ class remove_staff:
          print(array[num.get()-1].roll)
 
 
+#--------------------- show list-----------------------
 
+textFont1 = ("Arial", 10, "bold italic")
+textFont2 = ("Arial", 16, "bold")
+textFont3 = ("Arial", 8, "bold")
+ 
+class LabelWidget(tkinter.Entry):
+    def __init__(self, master, x, y, text):
+        self.text = tkinter.StringVar()
+        self.text.set(text)
+        tkinter.Entry.__init__(self, master=master)
+        self.config(relief="ridge", font=textFont1,
+                    bg="#ffffff000", fg="#000000fff",
+                    readonlybackground="#ffffff000",
+                    justify='center',width=8,
+                    textvariable=self.text,
+                    state="readonly")
+        self.grid(column=x, row=y)
+ 
+class EntryWidget(tkinter.Entry):
+    def __init__(self, master, x, y):
+        tkinter.Entry.__init__(self, master=master)
+        self.value = tkinter.StringVar()
+        self.config(textvariable=self.value, width=8,
+                    relief="ridge", font=textFont1,
+                    bg="#ddddddddd", fg="#000000000",
+                    justify='center')
+        self.grid(column=x, row=y)
+        self.value.set("")
+ 
+class EntryGrid(tkinter.Tk):
+    ''' Dialog box with Entry widgets arranged in columns and rows.'''
+    def __init__(self, colList, rowList,  title="Entry Grid"):
+        self.cols = colList[:]
+        self.colList = colList[:]
+        self.colList.insert(0, "")
+        self.rowList = rowList
+        tkinter.Tk.__init__(self)
+        self.title(title)
+ 
+        self.mainFrame = tkinter.Frame(self)
+        self.mainFrame.config(padx='3.0m', pady='3.0m')
+        self.mainFrame.grid()
+        self.make_header()
+ 
+        self.gridDict = {}
+        for i in range(1, len(self.colList)):
+            for j in range(len(self.rowList)):
+                w = EntryWidget(self.mainFrame, i, j+1)
+                self.gridDict[(i-1,j)] = w.value
+                def handler(event, col=i-1, row=j):
+                    return self.__entryhandler(col, row)
+                w.bind(sequence="<FocusOut>", func=handler)
+        self.mainloop()
+ 
+    def make_header(self):
+        self.hdrDict = {}
+        for i, label in enumerate(self.colList):
+            def handler(event, col=i, row=0, text=label):
+                return self.__headerhandler(col, row, text)
+            w = LabelWidget(self.mainFrame, i, 0, label)
+            self.hdrDict[(i,0)] = w
+            w.bind(sequence="<KeyRelease>", func=handler)
+ 
+        for i, label in enumerate(self.rowList):
+            def handler(event, col=0, row=i+1, text=label):
+                return self.__headerhandler(col, row, text)
+            w = LabelWidget(self.mainFrame, 0, i+1, label)
+            self.hdrDict[(0,i+1)] = w
+            w.bind(sequence="<KeyRelease>", func=handler)
+ 
+    def __entryhandler(self, col, row):
+        s = self.gridDict[(col,row)].get()
+        if s.upper().strip() == "EXIT":
+            self.destroy()
+        elif s.upper().strip() == "DEMO":
+            self.demo()
+        elif s.strip():
+            print (s)
+ 
+    def demo(self):
+        ''' enter a number into each Entry field '''
+        for i in range(len(self.cols)):
+            for j in range(len(self.rowList)):
+               # sleep(0.25)
+                self.set(i,j,"")
+                self.update_idletasks()
+                #sleep(0.1)
+                self.set(i,j,i+1+j)
+                self.update_idletasks()
+ 
+    def __headerhandler(self, col, row, text):
+        ''' has no effect when Entry state=readonly '''
+        self.hdrDict[(col,row)].text.set(text)
+ 
+    def get(self, x, y):
+        return self.gridDict[(x,y)].get()
+ 
+    def set(self, x, y, v):
+        self.gridDict[(x,y)].set(v)
+        return v
+ 
+#--------- تیکه پایین باید تو main باشه تا جدول نشون داده شه
+# if __name__ == "__main__":
+#     # arr = []
+#     # p1=["yeganeh","ghani","boss","123456789"]
+#     # p2=["fateme","vysi","boss2","789654123"]
+#     # p3=["fateme","ahmdian","boss3","74185263"]
+#     # arr.append(p1)
+#     # arr.append(p2)
+#     # arr.append(p3)
+#     cols = ['Name', 'Family', 'Roll', 'Pr.no.']
+#     rows = ['1', '2', '3', '4']
+
+#     app = EntryGrid(cols, rows)
 
 
 
