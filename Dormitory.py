@@ -3,22 +3,29 @@ from _tkinter import *
 import tkinter.ttk as ttk
 import tkinter.messagebox as tkMessageBox
 import sqlite3
+
 #------------------------------------------- Class -----------------------------------
-array_employee = []
+array = []
 # =============================(CLASSES)==========================
+
 class Employee:
+
     def __init__(self, name, family, roll, personal_number):
         self.name = name
         self.family = family
         self.roll = roll
         self.personal_number = personal_number
+
+
 class Student:
+
     def __init__(self, name, family, field, student_number):
         self.name = name
         self.family = family
         self.field = field
         self.student_number = student_number
 class Room:
+
     def __init__(self, number, block_name, floor, students):
         self.number = number
         self.block_name = block_name
@@ -30,7 +37,9 @@ class Block:
         self.block_name = block_name
         self.superviser = supervisor
         self.rooms = rooms
+
 #-------------------------- pages ------------------------------------
+
 class Main_Page:
     def __init__ (self, root):
         self.root=root
@@ -50,8 +59,6 @@ class Main_Page:
         label.place(x='80', y='280')
 
         BlockBTN.pack(padx=5, pady=20)
-        EmployeeBTN.pack(padx=5,pady=100)
-        SrearchBTN.pack(padx=5,pady=100)
         EmployeeBTN.pack(padx=5,pady=20)
         SrearchBTN.pack(padx=5,pady=20)
         self.root.geometry("%dx%d+%d+%d" % (300, 300, 500, 200))
@@ -80,12 +87,7 @@ class employee_menu :
                                 bg='white')
 
 
-                # SrearchBTN.mainloop()
-                # BlockBTN.mainloop()
-                # EmployeeBTN.mainloop()
-                # self.root.mainloop()
 
-            self.root.bind()
             AddBTN.pack(padx=5, pady=20)
             RemoveBTN.pack(padx=5, pady=20)
             ShowList_BTN.pack(padx=5, pady=20)
@@ -93,11 +95,11 @@ class employee_menu :
             self.root.resizable(0, 0)
 
 
-#----------------------------------
 #===============================================================
 class rabet :
 
     def __init__(self,_class,root):
+
        self.new=Toplevel(root)
        _class(self.new)
 # def Signup_menu_graphics():
@@ -120,12 +122,6 @@ class add_staff :
         self.root = root
         self.root.title("signup menu")
         self.root["bg"] = "black"
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        x = (screen_width / 2) - (100)
-        y = (screen_height / 2) - (200)
-        self.root.geometry("%dx%d+%d+%d" % (500, 400, x, y))
-        # self.root.resizable(0, 0)
 
         self.root.geometry("%dx%d+%d+%d" % (500, 300, 500, 200))
         self.root.resizable(0, 0)
@@ -134,22 +130,31 @@ class add_staff :
         LASTNAME = StringVar()
         PERSONAL_NUMBER = StringVar()
         ROLL = StringVar()
+
         ContactForm = Frame(root)
+
         ContactForm.pack(side=TOP, pady=50 ,padx=100)
+
         lbl_firstname=Label(ContactForm, text="Firstname", font=('arial', 14), bd=5)
         lbl_firstname.grid(row=0, sticky=W)
+
         lbl_lastname = Label(ContactForm, text="Lastname", font=('arial', 14), bd=5)
         lbl_lastname.grid(row=1, sticky=W)
+
         lbl_roll = Label(ContactForm, text="Roll", font=('arial', 14), bd=5)
         lbl_roll.grid(row=3, sticky=W)
+
         lbl_personalnumber = Label(ContactForm, text="Personal Number", font=('arial', 14), bd=5)
         lbl_personalnumber.grid(row=5, sticky=W)
+
         firstname = Entry(ContactForm, textvariable=FIRSTNAME, font=('arial', 14))
         firstname.grid(row=0, column=1)
         lastname = Entry(ContactForm, textvariable=LASTNAME, font=('arial', 14))
         lastname.grid(row=1, column=1)
+
         roll = Entry(ContactForm, textvariable=ROLL, font=('arial', 14))
         roll.grid(row=3, column=1)
+
         personalnumber = Entry(ContactForm, textvariable=PERSONAL_NUMBER, font=('arial', 14))
         personalnumber.grid(row=5, column=1)
         btn_save = Button(ContactForm, text="Save", width=50,command=lambda: self.Save_staff(FIRSTNAME.get(),LASTNAME.get(),ROLL.get(),PERSONAL_NUMBER.get()))
@@ -157,8 +162,7 @@ class add_staff :
         ContactForm.pack()
     def Save_staff(self,name, family, roll,personalnmber):
 
-        array_employee.append(Employee(name, family, roll,personalnmber))
-#-------------------------------------------------------------------------------
+        array.append(Employee(name, family, roll,personalnmber))
 #----------------------------------- حذف کامندان --------------------------------------------
 
 class remove_staff:
@@ -176,7 +180,6 @@ class remove_staff:
 
         #         show list
 
-
         inputNumber = IntVar()
         lbl_input = Label(self.root, text="Enter number", font=('arial', 10), bd=5)
         lbl_input.place(x=5,y=420)
@@ -189,8 +192,8 @@ class remove_staff:
 
     def reamove_Staff(self,num):
 
-         del array_employee[num.get()-1]
-         print(array_employee[num.get()-1].roll)
+         del array[num.get()-1]
+         print(array[num.get()-1].roll)
 
 
 
