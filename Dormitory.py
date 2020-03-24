@@ -8,6 +8,11 @@ import sqlite3
 array = []
 # =============================(CLASSES)==========================
 
+
+def Exit(root):
+    print("exit")
+    root.destroy()
+
 class Employee:
 
     def __init__(self, name, family, roll, personal_number):
@@ -55,12 +60,17 @@ class Main_Page:
                              command=lambda: rabet(employee_menu, root))
         SrearchBTN = Button(self.root, text='Search', width='10', height='1', bd='3', activebackground='#ff8000', bg='white')
 
+        Exit_BTN = Button(self.root, text='EXIT', width='10', height='1', bd='3', activebackground='#ff8000',bg='white',
+                          command=lambda :Exit(self.root))
+
         label = Label(self.root, text='Welcome Boss!', font=("Courier", 12))
         label.place(x='80', y='280')
 
         BlockBTN.pack(padx=5, pady=20)
         EmployeeBTN.pack(padx=5,pady=20)
         SrearchBTN.pack(padx=5,pady=20)
+        Exit_BTN.pack(padx=5, pady=20)
+
         self.root.geometry("%dx%d+%d+%d" % (300, 300, 500, 200))
         self.root.resizable(0, 0)
 
@@ -86,11 +96,10 @@ class employee_menu :
             ShowList_BTN = Button(self.root, text='Show List', width='10', height='1', bd='3', activebackground='#ff8000',
                                 bg='white')
 
-
-
             AddBTN.pack(padx=5, pady=20)
             RemoveBTN.pack(padx=5, pady=20)
             ShowList_BTN.pack(padx=5, pady=20)
+
             self.root.geometry("%dx%d+%d+%d" % (300, 300, 500, 200))
             self.root.resizable(0, 0)
 
@@ -98,10 +107,11 @@ class employee_menu :
 #===============================================================
 class rabet :
 
+
     def __init__(self,_class,root):
 
-       self.new=Toplevel(root)
-       _class(self.new)
+        self.new=Toplevel(root)
+        _class(self.new)
 # def Signup_menu_graphics():
 #     root = Tk()
 #     root.title("first menu")
@@ -205,7 +215,6 @@ class remove_staff:
 #------------------------------ Main ------------------------------
 
 if __name__ == '__main__':
-
     root=Tk()
     first=Main_Page(root)
     root.mainloop()
