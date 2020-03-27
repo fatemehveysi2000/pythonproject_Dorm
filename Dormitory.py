@@ -47,7 +47,7 @@ class Block:
     def __init__(self, block_name, code, supervisor):
         self.code = code
         self.block_name = block_name
-        self.superviser = supervisor
+        self.supervisor = supervisor
         rooms = []
 
 
@@ -240,7 +240,7 @@ class show_List:
 
 
         tree.heading('Name', text="Name", anchor=W)
-        tree.heading('Lastname', text="Lastname", anchor=W)
+        tree.heading('Lastname', text="Last name", anchor=W)
         tree.heading('Roll', text="Roll", anchor=W)
         tree.heading('Personal Number', text="Personal Number", anchor=W)
 
@@ -264,7 +264,7 @@ class block_menu :
         AddBTN = Button(self.root, text='Add', width="10", height="1", bd='3', activebackground='green',
                         bg='white', command=lambda: rabet(Add_Block,root))
         RemoveBTN = Button(self.root, text='Remove', width="10", height="1", bd='3', activebackground='#0000ff',
-                           bg='white', command=lambda: rabet())
+                           bg='white', command=lambda: rabet(remove_Block,root))
         ShowList_BTN = Button(self.root, text='Show List', width='10', height='1', bd='3', activebackground='#ff8000',
                               bg='white', command=lambda: rabet())
 
@@ -328,8 +328,52 @@ class Add_Block :
 
 
 
+# --------------------------------------------------------- (remove block) -----------------------------------
+class remove_Block:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("remove Block")
+        self.root["bg"] = "black"
+
+        self.root.geometry("%dx%d+%d+%d" % (500, 300, 500, 200))
+        self.root.resizable(0, 0)
+
+        TableMargin = Frame(root, width=500)
+        TableMargin.pack(side=TOP)
+
+        tree = ttk.Treeview(TableMargin,
+                            columns=("block name", "code", "supervisor"),
+                            height=400, selectmode="extended",
+                            )
 
 
+        tree.heading('block name', text="block name", anchor=W)
+        tree.heading('code', text="code", anchor=W)
+        tree.heading('supervisor', text="supervisor", anchor=W)
+
+        tree.column('#0', stretch=NO, minwidth=0, width=0)
+        tree.column('#1', stretch=NO, minwidth=0, width=100)
+        tree.column('#2', stretch=NO, minwidth=0, width=200)
+
+        tree.pack()
+        for object in array_block:
+            tree.insert('', 'end', values=(object.block_name,object.code,object.supervisor))
+
+        inputNumber = IntVar()
+        lbl_input = Label(self.root, text="Enter number", font=('arial', 10), bd=5)
+        lbl_input.place(x=5, y=200)
+
+        input = Entry(self.root, textvariable=inputNumber, width=16, font=('arial', 14))
+        input.place(x=110, y=200)
+
+        blockRemoveBtn = Button(self.root, text="Remove", command=lambda: self.reamove_Block(inputNumber), width=30)
+        blockRemoveBtn.place(x=140,y=270)
+
+    def reamove_Block(self, num):
+        if (num.get()<=array_block.__len__() and num.get()>0):
+            del array_block[num.get() - 1]
+        else:
+            print("no such Block")
 
 
 
