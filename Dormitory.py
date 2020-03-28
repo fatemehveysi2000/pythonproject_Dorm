@@ -1,5 +1,6 @@
+import tkinter
 from tkinter import *
-
+from tkinter import messagebox
 import tkinter.ttk as ttk
 
 
@@ -215,7 +216,8 @@ class remove_staff:
         if (num.get()<=array_employee.__len__() and num.get()>0):
             del array_employee[num.get() - 1]
         else:
-            print("no such Employee")
+            #print("no such Employee")
+            messagebox.showwarning("Warning","Wrong number, Please try again")
 
 
 # --------------------- showlist-----------------------
@@ -373,7 +375,8 @@ class remove_Block:
         if (num.get()<=array_block.__len__() and num.get()>0):
             del array_block[num.get() - 1]
         else:
-            print("no such Block")
+            #print("no such Block")
+            messagebox.showwarning("Warning","Wrong number, Please try again")
 
 
 #----------------------------- show list block-----------------------
@@ -411,6 +414,53 @@ class show_list_block:
             tree.insert('',
                         'end',
                         values=(object.block_name,object.code,object.supervisor))
+
+
+        inputNumber = IntVar()
+        lbl_input = Label(self.root, text="Enter code", font=('arial',10), bd=5)
+        lbl_input.place(x=100, y=200)
+
+        input = Entry(self.root, textvariable=inputNumber, width=16, font=('arial', 14))
+        input.place(x=200, y=200)
+
+        #RoomDetail = Button(self.root, text="Enter", command=lambda: self.Details(inputNumber), width=30)
+        #RoomDetail.place(x=140,y=270)
+
+    # def Details(self, num):
+    #     for i in range(len(array_block)+1):
+    #         if num.get() == array_block[(3*i)+1]:
+    #             Room_menu(root)
+    #         else:
+    #             messagebox.showwarning("Warning","Wrong code, Please try again")
+        
+
+#-----------------------------------  Rooms Menu  --------------------------
+
+
+class Room_menu:
+    def __init__ (self,root):
+        self.root = root
+        self.root.configure(bg="black")
+        self.root.geometry("600x600")
+        self.root.title("Room_Menu")
+
+        AddBTN = Button(self.root, text='Add', width="10", height="1", bd='3', activebackground='green',
+                        bg='white', command=lambda: rabet(Add_Block,root))
+        RemoveBTN = Button(self.root, text='Remove', width="10", height="1", bd='3', activebackground='#0000ff',
+                           bg='white', command=lambda: rabet(remove_Block,root))
+        ShowList_BTN = Button(self.root, text='Show List', width='10', height='1', bd='3', activebackground='#ff8000',
+                              bg='white', command=lambda: rabet(show_list_block, root))
+
+
+        AddBTN.pack(padx=5, pady=20)
+        RemoveBTN.pack(padx=5, pady=20)
+        ShowList_BTN.pack(padx=5, pady=20)
+
+
+        self.root.geometry("%dx%d+%d+%d" % (300, 300, 500, 200))
+        self.root.resizable(0, 0)
+
+
 
 # ------------------------------ Main ------------------------------
 
