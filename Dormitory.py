@@ -266,7 +266,7 @@ class block_menu :
         RemoveBTN = Button(self.root, text='Remove', width="10", height="1", bd='3', activebackground='#0000ff',
                            bg='white', command=lambda: rabet(remove_Block,root))
         ShowList_BTN = Button(self.root, text='Show List', width='10', height='1', bd='3', activebackground='#ff8000',
-                              bg='white', command=lambda: rabet())
+                              bg='white', command=lambda: rabet(show_list_block, root))
 
 
         AddBTN.pack(padx=5, pady=20)
@@ -376,7 +376,41 @@ class remove_Block:
             print("no such Block")
 
 
+#----------------------------- show list block-----------------------
+class show_list_block:
+    def __init__(self,root):
+        self.root = root
+        self.root.title("Show List")
+        self.root["bg"] = "black"
 
+        self.root.geometry("%dx%d+%d+%d" % (500, 300, 500, 200))
+        self.root.resizable(0,0)
+
+        TableMargin = Frame(root, width=500)
+        TableMargin.pack(side=TOP)
+
+        tree = ttk.Treeview(TableMargin,
+                            columns=("Name", "Code", "Superviser"),
+                            height=400, selectmode="extended"
+                            )
+
+        tree.heading('Name', text="Name", anchor=W)
+        tree.heading('Code', text="Code", anchor=W)
+        #tree.heading('Roosm', text="Rooms", anchor=W)
+        tree.heading('Superviser', text="Superviser", anchor=W)
+        #tree.heading('Students', text="Students", anchor=W)
+
+        tree.column('#0', stretch=NO, minwidth=0, width=0)
+        tree.column('#1', stretch=NO, minwidth=0, width=80)
+        tree.column('#2', stretch=NO, minwidth=0, width=100)
+        #tree.column('#3', stretch=NO, minwidth=0, width=140)
+        #tree.column('#4', stretch=NO, minwidth=0, width=200)
+
+        tree.pack()
+        for object in array_block:
+            tree.insert('',
+                        'end',
+                        values=(object.block_name,object.code,object.supervisor))
 
 # ------------------------------ Main ------------------------------
 
