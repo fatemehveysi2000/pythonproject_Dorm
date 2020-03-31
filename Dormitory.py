@@ -463,7 +463,7 @@ class Room_menu:
 
 
 # ------------------------------ Main ------------------------------
-
+# :)
 if __name__ == '__main__':
     root = Tk()
     first = Main_Page(root)
